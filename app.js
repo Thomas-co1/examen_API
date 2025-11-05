@@ -1,17 +1,19 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 require('dotenv').config();
 
 
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/Users');
-var authRouter = require('./routes/auth');
-var productsRouter = require('./routes/Products');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/Users');
+const authRouter = require('./routes/auth');
+const productsRouter = require('./routes/Products');
+const tagsRouter = require('./routes/tags');
 
-var app = express();
+
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,6 +25,7 @@ app.use('/', indexRouter);
 app.use('/Users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/products', productsRouter);
+app.use('/tags', tagsRouter);
 
 
 module.exports = app;

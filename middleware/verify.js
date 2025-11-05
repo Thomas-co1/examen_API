@@ -6,16 +6,15 @@ function raise403(res) {
 }
 
 async function verifyToken(req, res, next) {
-    const bearer = req.headers.authorization;
+const bearer = req.headers.authorization;
 
-    // Aucun token signifie visiteur
     if (!bearer || !bearer.startsWith('Bearer ')) {
+        // Aucun token fourni → visiteur
         req.user = null;
         req.isAdmin = false;
         req.role = 'visitor';
-        req.tokenError = 'Aucun token fourni';
-        console.log("[verifyToken] Aucun token fourni");
-        next();
+        console.log("Aucun token fourni");
+        return next();
     }
 
     const token = bearer.split(" ")[1];
@@ -31,9 +30,6 @@ async function verifyToken(req, res, next) {
         }
 
         req.user = user;
-        req.isAdmin = user.Type === 'Admin'; // ⚠️ Attention à la casse
-        req.role = user.Type === 'Admin' ? 'admin' : 'user';
-        console.log(`[verifyToken] Utilisateur trouvé : ${user.name}, rôle : ${req.role}`);
 
         next();
 
